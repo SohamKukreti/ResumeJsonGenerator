@@ -1,6 +1,13 @@
 import streamlit as st
 import json
+import requests
+import os
+from dotenv import load_dotenv
 from datetime import datetime
+
+load_dotenv()
+
+X_MASTER_KEY = os.environ["X_MASTER_KEY"]
 
 # Function to get dynamic inputs for a section
 def get_dynamic_input(section_title, fields):
@@ -72,8 +79,17 @@ if st.button("Generate JSON"):
     # Convert to JSON and save
     json_data = json.dumps(resume_data, indent=4)
     file = str(datetime.now())
-    with open(f"resume/{file}.json", "w") as json_file:
-        json_file.write(json_data)
+    url = 'https://api.jsonbin.io/v3/b'
+    headers = {
+    'Content-Type': 'application/json',
+    'X-Master-Key': f'{X_MASTER_KEY}'
+    }
+    data = resume_data
+
+    req = requests.post(url, json=data, headers=headers)
+    print(req.text)
+    #with open(f"resume/{file}.json", "w") as json_file:
+    #    json_file.write(json_data)
     
     st.success("JSON file generated successfully!")
     st.json(json_data)
