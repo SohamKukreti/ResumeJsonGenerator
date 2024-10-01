@@ -37,8 +37,13 @@ role = st.text_input("Role")
 education_fields = ["type eg. university, high school", "name", "graduation_year", "course", "GPA"]
 education = get_dynamic_input("Education", education_fields)
 
+# Skills Section
+st.header("Coursework")
+courses = st.text_area("Enter some important courses you have taken, separated by commas")
+
+
 # Experience Section
-experience_fields = ["title", "organization", "start and end date", "description"]
+experience_fields = ["title", "company", "start and end date", "description"]
 experience = get_dynamic_input("Experience", experience_fields)
 
 # Projects Section
@@ -69,6 +74,7 @@ if st.button("Generate JSON"):
         "address": address,
         "role": role,
         "Education": education,
+        "coursework" : courses,
         "experience": experience,
         "projects": projects,
         "Achievements": achievements,
